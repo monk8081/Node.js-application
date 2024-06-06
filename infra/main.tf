@@ -1,5 +1,12 @@
+
 provider "aws" {
-  region = "us-west-2"
+  region = "us-east-1"
+}
+
+resource "aws_instance" "demo-server" {
+    ami = "ami-053b0d53c279acc90"
+    instance_type = "t2.micro"
+    key_name = "linux-KP"
 }
 
 resource "aws_vpc" "main" {
@@ -9,7 +16,7 @@ resource "aws_vpc" "main" {
 resource "aws_subnet" "subnet" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.0.1.0/24"
-  availability_zone = "us-west-2a"
+  availability_zone = "us-east-1a"
 }
 
 resource "aws_security_group" "sg" {
