@@ -22,11 +22,12 @@ jobs:
       id: ecr-credentials
       run: |
         echo "Docker Username: ${{ steps.login-ecr.outputs.docker_username }}"
-        echo "Docker Password: ${{ steps.login-ecr.outputs.docker_password }}"
-
-    - name: Log in to Docker Hub
+        echo "Docker Password: ${{ steps.login-ecr.outputs.docker_password }}" 
+        
+    - name: Log in to ECR
       run: |
-        echo ${{ steps.login-ecr.outputs.docker_password }} | docker login --username ${{ steps.login-ecr.outputs.docker_username }} --password-stdin   
+        echo ${{ steps.login-ecr.outputs.docker_password }} | docker login --username ${{ steps.login-ecr.outputs.docker_username }} --password-stdin https://${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
+    
 
     - name: Build Docker image
       run: |
